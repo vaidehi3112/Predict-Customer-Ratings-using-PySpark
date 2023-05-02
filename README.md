@@ -1,6 +1,6 @@
 # Predict-Customer-Ratings-using-PySpark
 
-Online shopping has become increasingly popular in recent years. Global e-commerce sales are expected to reach 6.3 trillion in 2023. This represents a growth of 10.4\% from 2022. The United States is expected to be the largest e-commerce market in 2023, with sales of 1.1 trillion dollars. This growth is being driven by a number of factors, including the convenience and affordability of online shopping, as well as the wide variety of products that are available online\cite{r7}.
+Online shopping has become increasingly popular in recent years. Global e-commerce sales are expected to reach 6.3 trillion in 2023. This represents a growth of 10.4\% from 2022. The United States is expected to be the largest e-commerce market in 2023, with sales of 1.1 trillion dollars. This growth is being driven by a number of factors, including the convenience and affordability of online shopping, as well as the wide variety of products that are available online.
 
 ### Problem Statement
 
