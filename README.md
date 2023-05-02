@@ -16,8 +16,6 @@ The objective of this project is to develop a parallelized approach to predict i
 
 ### Key Benefits
 
-\begin{itemize}
-    \item NLP-based analysis of customer reviews enables data-driven decision-making by providing valuable insights into customer sentiment.
-    \item Understanding customer feedback through NLP analysis of reviews, businesses can proactively address issues faced by customers.
-    \item Improved product performance: Predicting customer ratings using reviews allows businesses to make informed decisions to improve their product or service.
-\end{itemize}
+* NLP-based analysis of customer reviews enables data-driven decision-making by providing valuable insights into customer sentiment.
+* Understanding customer feedback through NLP analysis of reviews, businesses can proactively address issues faced by customers.
+* Improved product performance: Predicting customer ratings using reviews allows businesses to make informed decisions to improve their product or service.
