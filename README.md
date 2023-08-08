@@ -1,21 +1,60 @@
-# Predict-Customer-Ratings-using-PySpark
+# Parallelizing Predicting Ratings using Customer Feedback
 
-Online shopping has become increasingly popular in recent years. Global e-commerce sales are expected to reach 6.3 trillion in 2023. This represents a growth of 10.4\% from 2022. The United States is expected to be the largest e-commerce market in 2023, with sales of 1.1 trillion dollars. This growth is being driven by a number of factors, including the convenience and affordability of online shopping, as well as the wide variety of products that are available online.
+## Introduction
 
-### Problem Statement
+Online shopping has witnessed a surge in popularity in recent years. With the global e-commerce sales projected to reach 6.3 trillion by 2023, understanding customer feedback becomes paramount. This project aims to leverage customer feedback to predict item ratings using a parallelized approach.
 
-One of the challenges of online shopping is that it can be difficult to know what products are worth buying. This is where customer feedback comes in. Customer feedback can provide valuable information about the quality of products, and it can help shoppers make informed decisions about what to buy.
+![Project Overview](https://i.imgur.com/5XqD5e6.png)
 
-One way to use customer feedback is to predict item ratings. This can be done by using a variety of machine learning techniques. However, one of the challenges of predicting item ratings is that it can be computationally expensive. This is because the number of possible combinations of products and ratings is very large.
+## Objective
 
-In this project, we will use a parallelized approach to predict item ratings. This will allow us to reduce the computational cost of the prediction process. We believe that our approach has the potential to improve the accuracy of item rating predictions.
+The primary objective is to develop a parallelized method to predict item ratings using customer feedback. This involves performing sentiment analysis on the review text and leveraging that to predict ratings for unseen reviews.
 
-### Objective
+## Key Benefits
 
-The objective of this project is to develop a parallelized approach to predict item ratings using customer feedback. This will be done by first performing sentiment analysis on the review text and then leveraging that to predict ratings for unseen reviews. The performance of the approach will be evaluated on the Multilingual Amazon Reviews Corpus, and the results will be compared to the results of other approaches.
+- **NLP-based Analysis**: Enables data-driven decision-making by providing insights into customer sentiment.
+- **Proactive Issue Addressing**: By understanding customer feedback, businesses can address issues faced by customers.
+- **Improved Product Performance**: Predicting customer ratings allows businesses to make informed decisions to enhance their product or service.
 
-### Key Benefits
+## Approach
 
-* NLP-based analysis of customer reviews enables data-driven decision-making by providing valuable insights into customer sentiment.
-* Understanding customer feedback through NLP analysis of reviews, businesses can proactively address issues faced by customers.
-* Improved product performance: Predicting customer ratings using reviews allows businesses to make informed decisions to improve their product or service.
+### Dataset
+
+The project utilizes the Multilingual Amazon Reviews Corpus dataset, which contains reviews in multiple languages collected from 2015 to 2019.
+
+### Data Preparation & Pre-Processing
+
+Data preparation involved combining the review headline and body to consolidate relevant information. Reviews were truncated to 4,000 characters to manage long-range dependencies. Infrequent words were filtered out to reduce noise.
+
+### Models and Techniques
+
+1. **TF-IDF + Multi Layer Perceptron**
+2. **Word2Vec + Random Forest Classifier**
+3. **WordPiece Tokenizer(BERT) + Bi-Directional LSTM**
+4. **DistilBERT-Base + Neural Network**
+
+## Experiments and Results
+
+The project employed various frameworks like PySpark, PyTorch, and TensorFlow for model training. The performance of each model was evaluated based on training and inference times, both with and without parallelism.
+
+## Customer Feedback Flow in Online Shopping
+
+![Customer Feedback Flow Diagram](https://showme.redstarplugin.com/d/zBGo0UiS)
+
+The diagram showcases the following steps:
+1. **Online Shopping Popularity**: The rise in online shopping trends.
+2. **Customer Feedback Importance**: The significance of understanding customer feedback.
+3. **Sentiment Analysis**: Analyzing the sentiment behind customer reviews.
+4. **Rating Prediction**: Predicting product ratings based on sentiment analysis.
+5. **Business Decision Making**: Making informed decisions based on predicted ratings.
+6. **Improved Product Performance**: Enhancing products or services based on insights.
+
+## Conclusion
+
+The project demonstrated the effectiveness of advanced machine learning models for multi-class text classification. Parallelizing the prediction process optimized the process, making it especially beneficial for industries like e-commerce and marketing.
+
+## Future Scope
+
+- **Balancing the Dataset**: Using re-sampling methods like SMOTE to reduce bias.
+- **Incorporating Additional Features**: Including helpful votes and total votes to enhance model performance.
+- **Utilizing Multi-GPU Architecture**: For PyTorch and a multi-node setup for Spark to reduce training time.
