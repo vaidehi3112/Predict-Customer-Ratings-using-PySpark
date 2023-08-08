@@ -4,7 +4,7 @@
 
 Online shopping has witnessed a surge in popularity in recent years. With the global e-commerce sales projected to reach 6.3 trillion by 2023, understanding customer feedback becomes paramount. This project aims to leverage customer feedback to predict item ratings using a parallelized approach.
 
-<img src="logo.png" alt="Logo" width="300">
+
 
 ## Objective
 
