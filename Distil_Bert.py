@@ -1,3 +1,4 @@
+# Import necessary libraries
 import torch
 import numpy as np
 from datasets import load_metric, load_dataset
@@ -5,24 +6,32 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trai
 import evaluate
 from sklearn.model_selection import KFold, ParameterGrid
 
+# Define data files for training and testing
 data_files = {"train": "train.csv", "test": "test.csv"}
 
+# Load dataset using the datasets library
 dataset = load_dataset("full_data", data_files=data_files)
 imdb = dataset
 
+# Select a subset of training and testing data
 small_train_dataset = imdb["train"].shuffle(seed=42).select([i for i in list(range(100000))])
 small_test_dataset = imdb["test"].shuffle(seed=42).select([i for i in list(range(10000))])
 
+# Load the tokenizer
 tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
+# Preprocessing function for tokenization
 def preprocess_function(examples):
     return tokenizer(examples["text"], truncation=True)
 
+# Tokenize the training and testing datasets
 tokenized_train = small_train_dataset.map(preprocess_function, batched=True)
 tokenized_test = small_test_dataset.map(preprocess_function, batched=True)
 
+# Define a data collator for padding
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
+# Function to compute evaluation metrics
 def compute_metrics(eval_pred):
     load_accuracy = load_metric("accuracy")
     load_f1 = load_metric("f1")
@@ -43,6 +52,7 @@ def compute_metrics(eval_pred):
 
     return {"accuracy": accuracy, "f1": f1, "mae":mae, "mape":mape}
 
+# Define a repository name for saving model checkpoints
 repo_name = "finetuning-sentiment-model-3000-samples"
 
 # Define hyperparameters for grid search
@@ -114,6 +124,7 @@ for params in ParameterGrid(param_grid):
         best_metrics = fold_metrics
         best_hyperparams = params
 
+# Print the best hyperparameters and metrics
 print(f"\nBest hyperparameters: {best_hyperparams}")
 print(f"Best metrics:")
 print(f"Accuracy: {best_metrics['eval_accuracy']}")
