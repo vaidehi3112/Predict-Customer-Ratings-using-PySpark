@@ -1,3 +1,4 @@
+# Import necessary libraries
 import pandas as pd
 import numpy as np
 import tensorflow as tf
@@ -10,16 +11,17 @@ from tensorflow.keras.layers import Dense, Dropout, LSTM, Bidirectional, GlobalM
 from transformers import TFBertModel,BertTokenizer
 from sklearn.model_selection import GridSearchCV, KFold, ParameterGrid
 
-
+# Load training and testing data
 train_df = pd.read_csv('train.csv', nrows=100000)
 test_df = pd.read_csv('test.csv', nrows=10000)
 
-
-
+# Load BERT tokenizer
 # Load BERT tokenizer
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
+# Define maximum sequence length for tokenization
 max_seq_length = 128
+
 # Tokenize train data
 train_data = train_df['text'].tolist()
 train_labels = train_df['label'].tolist()
@@ -30,6 +32,7 @@ test_data = test_df['text'].tolist()
 test_labels = test_df['label'].tolist()
 test_tokens = tokenizer(test_data, max_length=max_seq_length, truncation=True, padding=True)["input_ids"]
 
+# Define a function to create the LSTM model
 def create_model(params):
     model = Sequential([
         Embedding(input_dim=tokenizer.vocab_size, output_dim=32, input_length=None),
@@ -44,6 +47,7 @@ def create_model(params):
     model.compile(loss='sparse_categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
     return model
 
+# Define hyperparameters and parameter grid for grid search
 num_folds = 5
 kf = KFold(n_splits=num_folds, shuffle=True, random_state=42)
 
@@ -54,17 +58,18 @@ param_grid = {'dropout_rate': [0.3, 0.2],
               'per_device_train_batch_size': [8,16,32],
               'learning_rate': [1e-3, 1e-2, 1e-1]}
 
+# Prepare test data
 X_test = np.array(test_tokens)
 y_test = np.array(test_labels)
 best_metrics = {"eval_accuracy": 0, "mae": 0}
 
-
+# Grid search loop
 for params in ParameterGrid(param_grid):
     print(f"\nTraining with hyperparameters: {params}")
     fold_idx = 1
     fold_metrics = {"eval_accuracy": [], "mae": []}
 
-    # Train and evaluate the model for each fold
+     # Train and evaluate the model for each fold
     for train_index, eval_index in kf.split(train_tokens):
         print(f"\nFold {fold_idx}")
         
@@ -84,7 +89,7 @@ for params in ParameterGrid(param_grid):
             shuffle=True
         )
 
-        # Evaluate on the validation set for the fold
+       # Evaluate on the validation set for the fold
         y_pred = model.predict(X_eval).squeeze()
 
         fold_metrics["eval_accuracy"].append(accuracy_score(y_eval, np.argmax(y_pred, axis=1)))
@@ -105,14 +110,18 @@ for params in ParameterGrid(param_grid):
         }
         best_hyperparams = params
 
+# Print the best hyperparameters and metrics
 print(f"\nBest hyperparameters: {best_hyperparams}")
 print(f"Best metrics:")
 print(f"Accuracy: {best_metrics['eval_accuracy']}")
 print(f"MAE: {best_metrics['mae']}")
 
+# Evaluate the model on the test set
 test_loss, test_acc = model.evaluate(X_test, y_test, verbose=1)
 predictions = model.predict(X_test)
 predicted_labels = np.argmax(predictions, axis=1)
 mae = mean_absolute_error(y_test, predicted_labels)
+
+#print test results
 print("Test Classification Accuracy is:", test_acc)
 print("Test MAE is:", mae)
