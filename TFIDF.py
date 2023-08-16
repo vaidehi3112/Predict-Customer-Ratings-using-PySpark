@@ -1,3 +1,4 @@
+#import necessary libraries
 from pyspark.sql import SparkSession
 import time
 
